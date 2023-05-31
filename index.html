@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie API Landing Page</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS */
+    /* ... */
+    .footer {
+      background-color: #f8f9fa;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Movie API</a>
+    </nav>
+  </header>
+
+  <main role="main" class="container mt-4">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <div id="movies" class="row"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>@hendra 2023</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // JavaScript Code
+    // Fetch movies from API and populate the page
+    axios.get('https://api.example.com/movies') // Replace with your actual API endpoint
+      .then(response => {
+        const movies = response.data;
+
+        // Loop through the movies and create HTML elements for each movie
+        const moviesContainer = document.getElementById('movies');
+        movies.forEach(movie => {
+          const movieCard = document.createElement('div');
+          movieCard.classList.add('col-lg-4', 'col-md-6', 'mb-4');
+
+          const card = document.createElement('div');
+          card.classList.add('card', 'h-100');
+
+          const cardBody = document.createElement('div');
+          cardBody.classList.add('card-body');
+
+          const title = document.createElement('h5');
+          title.classList.add('card-title');
+          title.textContent = movie.title;
+
+          const year = document.createElement('p');
+          year.classList.add('card-text');
+          year.textContent = `Year: ${movie.year}`;
+
+          const rating = document.createElement('p');
+          rating.classList.add('card-text');
+          rating.textContent = `Rating: ${movie.rating}`;
+
+          const cast = document.createElement('p');
+          cast.classList.add('card-text');
+          cast.textContent = `Cast: ${movie.cast.join(', ')}`;
+
+          cardBody.appendChild(title);
+          cardBody.appendChild(year);
+          cardBody.appendChild(rating);
+          cardBody.appendChild(cast);
+          card.appendChild(cardBody);
+          movieCard.appendChild(card);
+
+          moviesContainer.appendChild(movieCard);
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
